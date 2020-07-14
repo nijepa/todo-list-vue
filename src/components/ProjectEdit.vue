@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     newProject(saveOrCancel) {
-      console.log('uuus'+this.type)
       if (saveOrCancel) {
         this.saveProject = true;
       } else {

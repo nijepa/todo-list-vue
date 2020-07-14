@@ -3,7 +3,7 @@
     <form action="" @submit.prevent="">
       <div class="form-group">
         <label for="title">Title : </label>
-        <input type="text" name="title" id="title" v-model="todoData.title">
+        <input type="text" name="title" id="title" v-model="todoData.title" required>
       </div>
       <div class="form-group">
         <label for="desc">Description : </label>

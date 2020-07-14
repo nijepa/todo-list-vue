@@ -24,13 +24,13 @@
 
         <transition name="slide-fade">
           <div class="container-edit" v-if="newProject" :class="{hidden: currentProject.id == isActive && editProject == true}">
-            <project-edit @send-message="handleSendMessage" v-bind:project-data="currentProject" type="add" />
+            <project-edit @send-message="handleProject" v-bind:project-data="currentProject" type="add" />
           </div>
         </transition>
 
         <transition name="slide-fade">
           <div class="container-edit" v-if="currentProject != {} && editProject == true">
-            <project-edit @send-message="handleSendMessage" v-bind:project-data="currentProject" type="edit" :class="{active: currentProject.id == isActive}" />
+            <project-edit @send-message="handleProject" v-bind:project-data="currentProject" type="edit" :class="{active: currentProject.id == isActive}" />
           </div>
         </transition>
 
@@ -109,6 +109,7 @@ export default {
       newTodo: false
     }
   },
+
   mounted() {
     if (!localStorage.getItem('allData')) {
       localStorage.setItem('allData', JSON.stringify(this.allData));
@@ -116,6 +117,7 @@ export default {
       this.allData = JSON.parse(localStorage.getItem('allData'));
     }
   },
+
   methods: {
 
     populateStorage() {
@@ -161,16 +163,20 @@ export default {
       this.selectedTodo = null;
     },
 
-    handleSendMessage(event, value, type) {
+    handleProject(event, value, type) {
       if (event && value) {
         if (type == 'add') {
+
           this.allData.push({ id: this.allData.length + 1, 
                               name: this.currentProject.name, 
                               desc: this.currentProject.desc,
                               todos: [] });
+
           this.populateStorage();
+
           this.newProject = false;
           return this.allData[this.allData.length - 1];
+
         } else {
           let objIndex = this.allData.findIndex((obj => obj.id == this.currentProject.id));
 
@@ -179,6 +185,7 @@ export default {
 
           this.populateStorage();
 
+          this.editProject = false;
           return this.allData[this.allData[objIndex]];
         }
       } else {
@@ -221,6 +228,7 @@ export default {
             
       ~removeIndex && this.allData[proIndex].todos.splice(index, 1);
       this.populateStorage();
+
       this.editTodo = false;
       this.selectedTodo = null;
       this.newTodo = true;
@@ -237,8 +245,12 @@ export default {
                                         dueDate: this.currentTodo.dueDate,
                                         priority: this.currentTodo.priority,
                                         status: this.currentTodo.status });
+
           this.populateStorage();
+
+          this.newTodo = false;
           return this.allData[this.allData[objIndex].todos.length - 1];
+
         } else {
           let proIndex = this.allData.findIndex((obj => obj.id == this.currentProject.id));
           let objIndex = this.allData.findIndex((obj => obj.id == this.currentProject.id));
@@ -252,6 +264,7 @@ export default {
 
           this.populateStorage();
 
+          this.selectedTodo = false;
           return this.allData[this.allData[objIndex]];
         }
       } else {

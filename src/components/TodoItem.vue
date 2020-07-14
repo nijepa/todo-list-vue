@@ -5,7 +5,9 @@
       <input type="checkbox" name="status" id="status" v-model="todosData.status"> 
       <span> {{ todosData.title }} * </span> 
       <span> {{ todosData.dueDate }} * </span> 
-      <span :class="'priority-' + todosData.priority"> {{ todosData.priority == 1 ? 'high' : todosData.priority == 2 ? 'medium' : 'low' }}</span>
+      <span :class="'priority-' + todosData.priority"> 
+        {{ todosData.priority == 1 ? 'high' : todosData.priority == 2 ? 'medium' : 'low' }}
+      </span>
     </h3>
   </div>
 </template>
@@ -28,7 +30,7 @@ export default {
     padding: .2rem;
     color: black;
   }
-.todos {
+  .todos {
     margin: 1rem;
     padding: 1rem;
     background-color: #40bcdb;
@@ -37,7 +39,6 @@ export default {
     -moz-box-shadow: 10px 10px 2px -5px rgba(28,110,173,1);
     box-shadow: 10px 10px 2px -5px rgba(28,110,173,1);
   }
-
   .todos:hover {
     color: white;
     background-color: rgba(28,110,173,1);
